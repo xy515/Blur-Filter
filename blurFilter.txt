@@ -1,0 +1,52 @@
+// write your code here
+
+var imgBlur=new SimpleImage("duvall.jpg");
+print(imgBlur);
+
+function doBlur() {
+  var copy=new SimpleImage(imgBlur.getWidth(),imgBlur.getHeight());
+  for(var pixel of imgBlur.values()) {
+    var num=Math.random();
+    var x=pixel.getX();
+    var y=pixel.getY();
+    var newPix;
+    if(num<0.5) {
+      copy.setPixel(x,y,pixel);
+    }
+    else {
+      var direction=Math.random()*4; //up, down, left, right
+      var distance;
+      if(direction<1) {
+        do{
+          distance=Math.round(Math.random()*10);
+        }while(y-distance<0);
+        newPix=imgBlur.getPixel(x,y-distance);
+        copy.setPixel(x,y,newPix);
+      }
+      else if(direction<2) {
+        do{
+          distance=Math.round(Math.random()*10);
+        }while(y+distance>=copy.getHeight());
+        newPix=imgBlur.getPixel(x,y+distance);
+        copy.setPixel(x,y,newPix);
+      }
+      else if(direction<3) {
+        do{
+          distance=Math.round(Math.random()*10);
+        }while(x+distance>=copy.getWidth());
+        newPix=imgBlur.getPixel(x+distance,y);
+        copy.setPixel(x,y,newPix);
+      }
+      else {
+        do{
+          distance=Math.round(Math.random()*10);
+        }while(x-distance<0);
+        newPix=imgBlur.getPixel(x-distance,y);
+        copy.setPixel(x,y,newPix);
+      }
+    }    
+  }
+print(copy);
+}
+
+doBlur();
